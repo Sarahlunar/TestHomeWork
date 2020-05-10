@@ -1,0 +1,30 @@
+norm:
+  -
+    a: 1
+    b: 2
+    res: 3
+  -
+    a: 0
+    b: 0
+    res: 0
+  -
+    a: -2
+    b: -3
+    res: -5
+  -
+    a: -9
+    b: 3
+    res: -6
+  -
+    a: 5
+    b: 0.2
+    res: 5.2
+  -
+    a: 3.4
+    b: -4
+    res: -0.6
+except:
+  -
+    a: "ew"
+    b: 3
+    res: "TypeError"
