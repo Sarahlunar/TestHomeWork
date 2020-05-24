@@ -23,7 +23,8 @@ class TestStock:
         caps["skipDeviceInitialization"] = "true"
         self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
         self.driver.implicitly_wait(4)
-
+    def teardown_class(self):
+        self.driver.quit()
     def teardown(self):
         # 返回上一页保证下一次能够正确执行
         self.driver.find_element(MobileBy.ID, "com.xueqiu.android:id/action_close").click()
@@ -37,11 +38,17 @@ class TestStock:
         # 3.找到要查询的内容并点击
         self.driver.find_element(MobileBy.XPATH, f"//*[@text='{stockCode}']").click()
         # 4.找到指定股票后面的"加自选"并点击
-        self.driver.find_element(MobileBy.XPATH, f"//*[@text='{stockCode}']/../../..//*[@text='加自选']").click()
+        el = self.driver.find_element(MobileBy.XPATH, f"//*[@text='{stockCode}']/../../..//*[@text='加自选']")
+        if el:
+            el.click()
+            locator = (
+            MobileBy.XPATH, f"//*[@tsext='{stockCode}']/../../..//*[@resource-id='com.xueqiu.android:id/followed_btn']")
+            WebDriverWait(self.driver, 5).until(expected_conditions.presence_of_element_located(locator))
+            res = self.driver.find_element(*locator).text
+        else:
+            res = "已添加"
         # 5.断言加自选成功
-        locator = (MobileBy.XPATH, f"//*[@text='{stockCode}']/../../..//*[@resource-id='com.xueqiu.android:id/followed_btn']")
-        WebDriverWait(self.driver, 5).until(expected_conditions.presence_of_element_located(locator))
-        res = self.driver.find_element(*locator).text
+
         assert res == "已添加"
 
 
