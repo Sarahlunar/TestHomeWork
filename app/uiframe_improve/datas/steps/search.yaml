@@ -1,0 +1,23 @@
+search:
+  - find: id
+    locator: search_input_text
+    action: send
+    value: "${stock_name}"
+  - find: xpath
+    locator: '//*[@text="${stock_code}"]'
+    action: click
+
+add_my_stock:
+  - find: xpath
+    locator: '//*[@text="${stock_code}"]/../../..//*[@text="加自选"]'
+    action: click
+
+is_add:
+  - finds: xpath
+    locator: '//*[@text="${stock_code}"]/../../..//*[@text="已添加"]'
+    action: len > 0
+
+reset:
+  - find: xpath
+    locator: '//*[@text="${stock_code}"]/../../..//*[@text="已添加"]'
+    action: click

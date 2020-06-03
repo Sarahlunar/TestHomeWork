@@ -1,0 +1,4 @@
+goto_quotes:
+  - find: xpath
+    locator: '//*[@resource-id="android:id/tabs"]//*[@text="行情"]'
+    action: click

@@ -1,0 +1,4 @@
+goto_search:
+  - find: id
+    locator: "action_search"
+    action: click
